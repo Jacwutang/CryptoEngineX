@@ -23,10 +23,17 @@ import { last } from 'react-stockcharts/lib/utils';
 class CandleStickChartForContinuousIntraDay extends React.Component {
   render() {
     const { type, data, width, ratio } = this.props;
+    // console.log('chart-type-data', data);
+    // console.log(last(data), 'LAST');
 
-    const xAccessor = d => d.date;
+    const xAccessor = d => {
+      // console.log(d.date, 'd param');
+      return d.date;
+    };
     const start = xAccessor(last(data));
+    // console.log(start, 'start');
     const end = xAccessor(data[Math.max(0, data.length - 150)]);
+    // console.log(end, 'end');
     const xExtents = [start, end];
 
     return (
