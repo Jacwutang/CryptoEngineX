@@ -1,0 +1,34 @@
+.order-book-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+}
+
+.type-Asks {
+  color: #d9534f;
+}
+
+.type-Bids {
+  color: #5cb85c;
+}
+
+.type-header {
+  border-bottom: 1px solid white;
+  width: 100%;
+  text-align: center;
+}
+
+.order-book-header {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  width: 100%;
+}
+
+.price-amt-ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -13,7 +13,7 @@ class Main extends Component {
     this.state = {
       exchange: 'bitfinex',
       market: 'BTC/USDT',
-      timespan: '1m',
+      timespan: '1d',
       loading: true,
     };
 
