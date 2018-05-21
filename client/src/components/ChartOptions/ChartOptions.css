@@ -1,0 +1,25 @@
+.options-list {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.market-exchange {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.exchanges-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.exchanges-list > * {
+  margin-right: 2vw;
+}
+
+.active {
+  background-color: blue;
+}

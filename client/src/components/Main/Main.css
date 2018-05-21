@@ -1,4 +1,12 @@
 .main-wrapper {
-  margin-top: 25%;
+  /* margin-top: 25%; */
   /* background: #303030; */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-around;
+  /* width: 100vw;  */
+  width: 90vw;
+  height: 100vh;
 }

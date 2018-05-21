@@ -6,7 +6,7 @@ class TradeDisplay extends Component {
   }
 
   render() {
-    return <div className="trade-display-container" />;
+    return <div className="trade-display-container"> Hey </div>;
   }
 }
 export default TradeDisplay;

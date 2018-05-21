@@ -19,13 +19,9 @@ class Chart extends React.Component {
       return <div>Loading...</div>;
     }
 
-    console.log(this.state.data, 'state data');
+    // console.log(this.state.data, 'state data');
 
-    return (
-      <TypeChooser>
-        {type => <ChartType type={type} data={this.state.data} />}
-      </TypeChooser>
-    );
+    return <ChartType type="hybrid" data={this.state.data} />;
   }
 }
 
