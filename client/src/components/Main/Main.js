@@ -55,7 +55,7 @@ class Main extends Component {
           toggleOption={this.updateState}
         />
         <Chart options={this.state} />
-        <TradeDisplay />
+        <TradeDisplay market={market} />
       </div>
     );
   }

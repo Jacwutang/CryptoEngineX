@@ -8,9 +8,10 @@ class TradeDisplay extends Component {
   }
 
   render() {
+    const { market } = this.props;
     return (
       <div className="trade-display-container">
-        <div className="order-book-info">Order Book -</div>
+        <div className="order-book-info">Order Book - {market} </div>
         <div className="ask-bids">
           <OrderBook type="Asks" />
 
