@@ -7,7 +7,15 @@ class OrderBook extends Component {
   }
 
   renderOrderInformation() {
-    return <ul className="price-amt-ul" />;
+    return (
+      <ul className="price-amt-ul">
+        {' '}
+        <li className="price-amt-item">
+          {' '}
+          <span> 123456 </span> <span> hahahaha </span>{' '}
+        </li>
+      </ul>
+    );
   }
 
   render() {
