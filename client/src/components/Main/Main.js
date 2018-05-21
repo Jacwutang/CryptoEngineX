@@ -11,18 +11,49 @@ class Main extends Component {
     super();
 
     this.state = {
-      exchange: '',
-      market: '',
-      timespan: '',
+      exchange: 'bitfinex',
+      market: 'BTC/USDT',
+      timespan: '1m',
+      loading: true,
     };
+
+    this.updateState = this.updateState.bind(this);
   }
 
-  handleClick() {}
+  componentDidMount() {
+    this.setState({ loading: false });
+  }
+
+  updateState(...args) {
+    if (args.length === 2) {
+      this.setState({ loading: true }, () => {
+        this.setState({ [args[0]]: args[1] }, () => {
+          this.setState({ loading: false });
+        });
+      });
+    } else {
+      this.setState({ loading: true }, () => {
+        this.setState({ [args[0]]: args[1], [args[2]]: args[3] }, () => {
+          this.setState({ loading: false });
+        });
+      });
+    }
+  }
 
   render() {
+    if (this.state.loading === true) {
+      return null;
+    }
+
+    const { exchange, market, timespan } = this.state;
     return (
       <div className="main-wrapper">
-        <ChartOptions />
+        <ChartOptions
+          exchange={exchange}
+          market={market}
+          timespan={timespan}
+          toggleOption={this.updateState}
+        />
         <Chart options={this.state} />
         <TradeDisplay />
       </div>

@@ -20,6 +20,8 @@ import { OHLCTooltip } from 'react-stockcharts/lib/tooltip';
 import { fitWidth } from 'react-stockcharts/lib/helper';
 import { last } from 'react-stockcharts/lib/utils';
 
+import './ChartType.css';
+
 class CandleStickChartForContinuousIntraDay extends React.Component {
   render() {
     const { type, data, width, ratio } = this.props;
@@ -58,7 +60,8 @@ class CandleStickChartForContinuousIntraDay extends React.Component {
             axisAt="left"
             orient="left"
             ticks={5}
-            tickFormat={format('.2s')}
+            tickFormat={format('.0s')}
+            tickStroke="#dee5ed"
           />
 
           <MouseCoordinateY
@@ -73,31 +76,19 @@ class CandleStickChartForContinuousIntraDay extends React.Component {
           />
 
           <CurrentCoordinate yAccessor={d => d.volume} fill="#9B0A47" />
-
-          <EdgeIndicator
-            itemType="first"
-            orient="left"
-            edgeAt="left"
-            yAccessor={d => d.volume}
-            displayFormat={format('.4s')}
-            fill="#0F0F0F"
-          />
-          <EdgeIndicator
-            itemType="last"
-            orient="right"
-            edgeAt="right"
-            yAccessor={d => d.volume}
-            displayFormat={format('.4s')}
-            fill="#0F0F0F"
-          />
         </Chart>
         <Chart
           id={1}
           yExtents={[d => [d.high, d.low]]}
           padding={{ top: 40, bottom: 20 }}
         >
-          <XAxis axisAt="bottom" orient="bottom" />
-          <YAxis axisAt="right" orient="right" ticks={5} />
+          <XAxis
+            axisAt="bottom"
+            orient="bottom"
+            tickStroke="#dee5ed"
+            stroke="#dee5ed"
+          />
+          <YAxis axisAt="right" orient="right" ticks={5} tickStroke="#dee5ed" />
 
           <MouseCoordinateX
             rectWidth={60}
@@ -147,3 +138,28 @@ CandleStickChartForContinuousIntraDay = fitWidth(
 );
 
 export default CandleStickChartForContinuousIntraDay;
+
+// <EdgeIndicator
+//   itemType="first"
+//   orient="left"
+//   edgeAt="left"
+//   yAccessor={d => d.volume}
+//   displayFormat={format('.4s')}
+//   fill="#0F0F0F"
+// />
+// <EdgeIndicator
+//   itemType="last"
+//   orient="right"
+//   edgeAt="right"
+//   yAccessor={d => d.volume}
+//   displayFormat={format('.4s')}
+//   fill="#0F0F0F"
+// />
+
+//
+// .react-stockcharts-tooltip {
+//        fill: red;
+//      }
+//      .react-stockcharts-tooltip-label {
+//        fill: green;
+//      }

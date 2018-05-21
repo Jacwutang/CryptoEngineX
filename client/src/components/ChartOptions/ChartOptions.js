@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
 import './ChartOptions.css';
+import { getMarketData } from './utils';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+import { FadingCircle } from 'better-react-spinkit';
 
 class ChartOptions extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      market: 'BTC/USDT',
-      exchange: 'BITFINEX',
-      timespan: 1000 * 60,
+      market: this.props.market,
+      exchange: this.props.exchange,
+      timespan: this.props.timespan,
+      all_markets: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    this.refs.btn1.classList.add('active');
+    const { exchange } = this.state;
+    this.refs[exchange].classList.add('active');
+
+    //Grab default markets from default exchange.
+    getMarketData(this.state.exchange).then(markets => {
+      this.setState({ all_markets: [...markets] });
+    });
+  }
+
+  updateParent(...args) {
+    this.props.toggleOption(...args);
   }
 
   handleChange(event, field) {
@@ -27,63 +42,83 @@ class ChartOptions extends Component {
       event.target.classList.add('active');
     }
 
-    this.setState({ [field]: event.target.value });
+    //setState to change exchange.
+    this.setState({ [field]: event.target.value }, () => {
+      getMarketData(this.state.exchange).then(markets => {
+        this.setState({ all_markets: markets, market: markets[0] }, () => {
+          this.updateParent(
+            'exchange',
+            this.state.exchange,
+            'market',
+            markets[0]
+          );
+        });
+      });
+    });
   }
 
+  handleSelectChange = selectedOption => {
+    let field = selectedOption.labelKey;
+    this.setState({ [field]: selectedOption.value }, () => {
+      this.updateParent(field, selectedOption.value);
+    });
+  };
+
   render() {
-    console.log(this.state);
+    const { all_markets } = this.state;
 
     return (
       <div className="options-list">
         <div className="market-exchange">
-          <select
+          <Select
+            className="market-select"
             value={this.state.market}
-            onChange={e => this.handleChange(e, 'market')}
-          >
-            <option selected value="BTC/USDT">
-              BTC/USD
-            </option>
-            <option value="BTC/EUR">BTC/EUR</option>
-            <option value="BTC/GBP">BTC/GBP</option>
-            <option value="ETH/USDT">ETH/USD</option>
-            <option value="ETH/EUR">ETH/EUR</option>
-            <option value="ETH/GBP">ETH/GBP</option>
-          </select>
+            onChange={this.handleSelectChange}
+            searchable={false}
+            clearable={false}
+            options={all_markets.map(market => {
+              return {
+                value: market,
+                label: market,
+                labelKey: 'market',
+              };
+            })}
+          />
+
           <ul className="exchanges-list">
             <button
               onClick={e => this.handleChange(e, 'exchange')}
-              ref="btn1"
+              ref="bitfinex"
               className="exchange-btn"
-              value="BITFINEX"
+              value="bitfinex"
             >
               {' '}
               BITFINEX{' '}
             </button>
             <button
               onClick={e => this.handleChange(e, 'exchange')}
-              ref="btn2"
+              ref="kraken"
               className="exchange-btn"
-              value="GDAX"
+              value="kraken"
             >
               {' '}
-              GDAX{' '}
+              KRAKEN{' '}
             </button>
           </ul>
         </div>
-
-        <select
+        <Select
+          className="timespan-select"
           value={this.state.timespan}
-          onChange={e => this.handleChange(e, 'timespan')}
-        >
-          <option selected value="{1000*60}">
-            1m
-          </option>
-          <option value={1000 * 60 * 5}>5m</option>
-          <option value={1000 * 60 * 15}>15m</option>
-          <option value={1000 * 60 * 60}>1h</option>
-          <option value={1000 * 60 * 60 * 24}>1d</option>
-          <option value={2629743}>1m</option>
-        </select>
+          onChange={this.handleSelectChange}
+          searchable={false}
+          clearable={false}
+          options={[
+            { value: '1m', label: '1m', labelKey: 'timespan' },
+            { value: '1h', label: '1h', labelKey: 'timespan' },
+            { value: '1d', label: '1d', labelKey: 'timespan' },
+            { value: '1M', label: '1M', labelKey: 'timespan' },
+          ]}
+        />
       </div>
     );
   }

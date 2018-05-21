@@ -3,36 +3,6 @@ import { timeParse } from 'd3-time-format';
 import axios from 'axios';
 import ccxt from 'ccxt';
 
-// function parseData(parse) {
-//   return function(d) {
-//     d.date = parse(d.date);
-//     d.open = +d.open;
-//     d.high = +d.high;
-//     d.low = +d.low;
-//     d.close = +d.close;
-//     d.volume = +d.volume;
-//
-//     return d;
-//   };
-// }
-//
-// const parseDateTime = timeParse('%Y-%m-%d %H:%M:%S');
-//
-// export function getData() {
-//   const promiseIntraDayContinuous = fetch(
-//     '//rrag.github.io/react-stockcharts/data/bitfinex_xbtusd_1m.csv'
-//   )
-//     .then(response => response.text())
-//     .then(data => csvParse(data, parseData(parseDateTime)))
-//     .then(data => {
-//       data.sort((a, b) => {
-//         return a.date.valueOf() - b.date.valueOf();
-//       });
-//       return data;
-//     });
-//   return promiseIntraDayContinuous;
-// }
-
 // const parseDateTime = timeParse('%Y-%m-%dT%H:%M:%S.%LZ');
 const parseDateTime = timeParse('%Q');
 
@@ -47,26 +17,34 @@ const parseDateTime = timeParse('%Q');
 //   return d;
 // }
 
+const timeframeToMSHash = {
+  '1m': 1000 * 60,
+  '1h': 1000 * 60 * 60,
+  '1M': 2629742 * 1000,
+  '1y': 31556926 * 1000,
+  '1d': 86400 * 1000,
+};
+
 let sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-export async function getData() {
-  let bitfinex = new ccxt.bitfinex({
+export async function getData(exchange, market, timespan) {
+  // console.log(exchange, market, timespan, 'UTILS');
+
+  exchange = new ccxt[exchange]({
     proxy: 'https://cors-anywhere.herokuapp.com/',
+    enableRateLimit: true,
+    rateLimit: 1000,
   });
-  await bitfinex.loadMarkets();
 
-  // console.log(bitfinex.markets['BTC/USDT']);
+  await sleep(exchange.rateLimit);
 
-  await sleep(bitfinex.rateLimit);
+  let currentUTCMilliSeconds = new Date().getTime();
 
-  let payload = await bitfinex.fetchOHLCV(
-    'BTC/USDT',
-    '1d',
-    '1417536000000',
-    1000
-  );
+  let timeframeMS = timeframeToMSHash[timespan];
 
-  // console.log(payload, 'payload');
+  let since = "'" + (currentUTCMilliSeconds - timeframeMS).toString() + "'";
+
+  let payload = await exchange.fetchOHLCV(market, timespan, since, 1000);
 
   let arrayObjs = payload.map(array => {
     let obj = {};
@@ -79,18 +57,6 @@ export async function getData() {
 
     return obj;
   });
-  // by default the data arrives "in-order"
-  // console.log(arrayObjs, 'pre-sort');
 
-  // arrayObjs = arrayObjs.sort((a, b) => a.date.valueOf() - b.date.valueOf());
-  //
-  // console.log(arrayObjs, 'after-sort');
-
-  // let markets = await bitfinex.loadMarkets();
-
-  // let ticker = await bitfinex.fetchTicker('BTC/USDT');
-  //
-  // let parsedData = parseData(ticker);
-  console.log(arrayObjs);
   return arrayObjs;
 }

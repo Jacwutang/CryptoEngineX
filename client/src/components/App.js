@@ -8,9 +8,11 @@ import Main from './Main/Main';
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <Route path="/" component={Main} />
-      </BrowserRouter>
+      <div className="reset">
+        <BrowserRouter>
+          <Route path="/" component={Main} />
+        </BrowserRouter>
+      </div>
     );
   }
 }

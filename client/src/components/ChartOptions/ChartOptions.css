@@ -2,12 +2,19 @@
   display: flex;
   justify-content: space-around;
   flex-direction: row;
+  height: 100px;
+  align-items: center;
+}
+
+.exchange-btn {
+  cursor: pointer;
 }
 
 .market-exchange {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .exchanges-list {
@@ -21,5 +28,15 @@
 }
 
 .active {
-  background-color: blue;
+  background-color: coral;
+}
+
+.market-select {
+  width: 25vw;
+  z-index: 100;
+}
+
+.timespan-select {
+  width: 15vw;
+  z-index: 100;
 }
