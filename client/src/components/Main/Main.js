@@ -11,8 +11,8 @@ class Main extends Component {
     super();
 
     this.state = {
-      exchange: 'bitfinex',
-      market: 'BTC/USDT',
+      exchange: 'kraken',
+      market: 'BCH/EUR',
       timespan: '1d',
       loading: true,
     };

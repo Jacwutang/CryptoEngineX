@@ -88,21 +88,22 @@ class ChartOptions extends Component {
           <ul className="exchanges-list">
             <button
               onClick={e => this.handleChange(e, 'exchange')}
-              ref="bitfinex"
-              className="exchange-btn"
-              value="bitfinex"
-            >
-              {' '}
-              BITFINEX{' '}
-            </button>
-            <button
-              onClick={e => this.handleChange(e, 'exchange')}
               ref="kraken"
               className="exchange-btn"
               value="kraken"
             >
               {' '}
               KRAKEN{' '}
+            </button>
+
+            <button
+              onClick={e => this.handleChange(e, 'exchange')}
+              ref="bitfinex"
+              className="exchange-btn"
+              value="bitfinex"
+            >
+              {' '}
+              BITFINEX{' '}
             </button>
           </ul>
         </div>

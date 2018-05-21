@@ -1,19 +1,41 @@
 import React from 'react';
 
 import ChartType from './ChartType';
-import { getData } from './utils';
+import { getData, getNewData } from './utils';
 
 import { TypeChooser } from 'react-stockcharts/lib/helper';
 import { FoldingCube } from 'better-react-spinkit';
 import './Chart.css';
 
 class Chart extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      data: [],
+    };
+  }
+
   componentDidMount() {
     const { exchange, market, timespan } = this.props.options;
 
-    getData(exchange, market, timespan).then(data => {
-      this.setState({ data });
+    getData(exchange, market, timespan).then(newData => {
+      this.setState({ data: [...newData] }, () =>
+        this.fetchData(exchange, market)
+      );
     });
+  }
+
+  fetchData(exchange, market) {
+    this.interval = setInterval(() => {
+      getNewData(exchange, market).then(newData => {
+        this.setState({ data: [...this.state.data, ...newData] });
+      });
+    }, 2500);
+  }
+
+  componentWillUnMount() {
+    clearInterval(this.interval);
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -33,7 +55,7 @@ class Chart extends React.Component {
   // }
 
   render() {
-    if (this.state == null) {
+    if (this.state.data.length === 0) {
       return (
         <div className="chart-spinner">
           {' '}
