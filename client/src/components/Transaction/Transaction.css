@@ -20,11 +20,20 @@
   margin-right: 1vw;
 }
 
+/* .ul-list:li:last-child{
+
+} */
+
 .list-item {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid white;
+  transition-duration: 2s;
 }
+
+/* .list-item.[class^='trade-active'] {
+  transition-duration: 2s;
+} */
 
 .has-failure {
   color: #d9534f;
@@ -32,4 +41,18 @@
 
 .has-success {
   color: #5cb85c;
+}
+
+[class^='trade-active'] {
+  transition-duration: 2s;
+}
+
+.trade-active-buy {
+  background: green;
+  /* transition-duration: 2s; */
+}
+
+.trade-active-sell {
+  background: #e00000;
+  /* transition-duration: 2s; */
 }

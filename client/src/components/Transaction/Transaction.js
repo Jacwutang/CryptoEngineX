@@ -6,6 +6,8 @@ class Transaction extends Component {
   constructor(props) {
     super(props);
 
+    this.item = React.createRef();
+
     this.state = {
       isMounted: false,
       trades: [],
@@ -34,7 +36,7 @@ class Transaction extends Component {
       getTrades(market, exchange, 1).then(payload => {
         this.setState({ trades: [...this.state.trades.slice(1), ...payload] });
       });
-    }, 15000);
+    }, 5000);
   }
 
   render() {
@@ -48,8 +50,17 @@ class Transaction extends Component {
             let tradeType =
               trade.side === 'buy' ? 'has-success' : 'has-failure';
 
+            if (idx === trades.length - 1) {
+              let item = this.item.current;
+              if (item !== null) {
+                item.classList.add(`trade-active-${trade.side}`);
+                setInterval(() => {
+                  item.classList.remove(`trade-active-${trade.side}`);
+                }, 2500);
+              }
+            }
             return (
-              <li className="list-item" key={idx}>
+              <li className="list-item" key={idx} ref={this.item}>
                 <span className={tradeType}>{trade.side} </span>
                 <span>{trade.price} </span>
                 <span>{trade.amount} </span>

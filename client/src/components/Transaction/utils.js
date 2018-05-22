@@ -13,7 +13,7 @@ export async function getTrades(market, exchange, limit = 15) {
   // let since = "'" + new Date().getTime() + "''";
   let payload = await exchange.fetchTrades(market, undefined, limit);
 
-  console.log('payload', payload);
+  // console.log('payload', payload);
 
   // [ {price,amount,side}, {}]
 
