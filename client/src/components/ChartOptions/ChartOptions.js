@@ -95,16 +95,6 @@ class ChartOptions extends Component {
               {' '}
               KRAKEN{' '}
             </button>
-
-            <button
-              onClick={e => this.handleChange(e, 'exchange')}
-              ref="bitfinex"
-              className="exchange-btn"
-              value="bitfinex"
-            >
-              {' '}
-              BITFINEX{' '}
-            </button>
           </ul>
         </div>
         <Select

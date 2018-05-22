@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Chart from '../Chart/Chart';
-import TradeDisplay from '../TradeDisplay/TradeDisplay';
+import OrderBook from '../OrderBook/OrderBook';
 import ChartOptions from '../ChartOptions/ChartOptions';
 import './Main.css';
 
@@ -55,7 +55,7 @@ class Main extends Component {
           toggleOption={this.updateState}
         />
         <Chart options={this.state} />
-        <TradeDisplay market={market} />
+        <OrderBook market={market} exchange={exchange} />
       </div>
     );
   }

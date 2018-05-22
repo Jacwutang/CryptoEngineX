@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
 import './OrderBook.css';
 
+import { getOrderData } from './utils';
+
 class OrderBook extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      price: [],
+      amount: [],
+    };
+  }
+
+  componentDidMount() {
+    const { market, exchange } = this.props;
+    // getOrderData(market,exchange).then( (data) => {
+    //
+    // })
+
+    getOrderData(market, exchange);
   }
 
   renderOrderInformation() {
@@ -12,24 +28,55 @@ class OrderBook extends Component {
         {' '}
         <li className="price-amt-item">
           {' '}
-          <span> 123456 </span> <span> hahahaha </span>{' '}
+          <span> 123456 </span>
+          <span> hahahaha </span>{' '}
         </li>
       </ul>
     );
   }
 
   render() {
-    const { type } = this.props;
+    const { market, exchange } = this.props;
     return (
       <div className="order-book-wrapper">
-        <div className={`type-${type} type-header`}> {type}</div>
+        <div className="order-book-title"> Order Book - {market} </div>
 
-        <div className="order-book-header">
-          <span className={`type-${type}`}> Price </span>
-          <span className={`type-${type}`}> Amount </span>
+        <div className="order-book-ask-bids">
+          <span className="has-failure"> Asks </span>
+          <span className="has-success"> Bids </span>
         </div>
 
-        {this.renderOrderInformation()}
+        <div className="order-book-header">
+          <div className="order-book-half">
+            <span className="has-failure"> Price </span>
+            <span className="has-failure"> Amount </span>
+          </div>
+
+          <div className="order-book-half">
+            <span className="has-success"> Price </span>
+            <span className="has-success"> Amount </span>
+          </div>
+        </div>
+
+        <div className="price-amt-row">
+          <ul className="price-amt-ul">
+            {' '}
+            <li className="price-amt-item">
+              {' '}
+              <span> 123456 </span>
+              <span> hahahaha </span>{' '}
+            </li>
+          </ul>
+
+          <ul className="price-amt-ul">
+            {' '}
+            <li className="price-amt-item">
+              {' '}
+              <span> 78910 </span>
+              <span> lololol </span>{' '}
+            </li>
+          </ul>
+        </div>
       </div>
     );
   }

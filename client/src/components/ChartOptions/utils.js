@@ -7,5 +7,5 @@ export async function getMarketData(exchange) {
 
   let markets = await exchange.loadMarkets();
 
-  return Object.keys(markets).slice(0, 7);
+  return Object.keys(markets);
 }
