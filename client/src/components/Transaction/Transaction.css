@@ -1,0 +1,18 @@
+.transaction-container {
+  /* height: 25vh; */
+  width: 100%;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+}
+
+.transaction-header {
+  border-bottom: 1px solid white;
+}
+
+.ul-list {
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}

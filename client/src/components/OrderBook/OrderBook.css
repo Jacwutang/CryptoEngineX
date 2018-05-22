@@ -7,7 +7,7 @@
   width: 100%;
   border: 1px solid gray;
   padding: 5px;
-  max-height: 30vh;
+  /* max-height: 30vh; */
 }
 
 /* .order-book-wrapper > div {
@@ -64,7 +64,7 @@
 .price-amt-ul {
   list-style: none;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   justify-content: space-around;
 
   margin: 0;
@@ -79,6 +79,6 @@
   border-bottom: 1px solid gray;
 }
 
-ul li:last-child {
+ul li:first-child {
   border-bottom: none;
 }

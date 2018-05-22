@@ -31,9 +31,10 @@ export async function getNewData(exchange, market) {
   exchange = new ccxt[exchange]({
     proxy: 'https://cors-anywhere.herokuapp.com/',
     enableRateLimit: true,
+    timeout: 10000,
   });
 
-  // await sleep(exchange.rateLimit);
+  await sleep(exchange.rateLimit);
 
   let since = "'" + new Date().getTime() + "''";
 
@@ -60,7 +61,7 @@ export async function getData(exchange, market, timespan) {
   exchange = new ccxt[exchange]({
     proxy: 'https://cors-anywhere.herokuapp.com/',
     enableRateLimit: true,
-    rateLimit: 2000,
+    timeout: 10000,
   });
 
   await sleep(exchange.rateLimit);

@@ -13,46 +13,47 @@ class Chart extends React.Component {
 
     this.state = {
       data: [],
+      isMounted: false,
     };
   }
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   const { exchange, market, timespan } = this.props.options;
+  //
+  //   getData(exchange, market, timespan).then(newData => {
+  //     this.setState({ data: [...newData] }, () =>
+  //       this.fetchData(exchange, market)
+  //     );
+  //   });
+  // }
+
+  async componentDidMount() {
     const { exchange, market, timespan } = this.props.options;
 
-    getData(exchange, market, timespan).then(newData => {
-      this.setState({ data: [...newData] }, () =>
-        this.fetchData(exchange, market)
-      );
+    let newData = await getData(exchange, market, timespan);
+
+    this.setState({ data: [...newData], isMounted: true }, () => {
+      if (this.state.isMounted) {
+        this.fetchData(exchange, market);
+      }
     });
   }
 
   fetchData(exchange, market) {
     this.interval = setInterval(() => {
       getNewData(exchange, market).then(newData => {
-        this.setState({ data: [...this.state.data, ...newData] });
+        let sorted = this.state.data
+          .concat(newData)
+          .sort((a, b) => a.date.valueOf() - b.date.valueOf());
+        this.setState({ data: sorted });
       });
-    }, 5000);
+    }, 1000);
   }
 
   componentWillUnMount() {
     clearInterval(this.interval);
+    this.setState({ isMounted: false });
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   const { exchange, market, timespan } = this.props.options;
-  //
-  //   if (
-  //     exchange !== nextProps.options.exchange ||
-  //     market !== nextProps.options.market ||
-  //     timespan !== nextProps.options.timespan
-  //   ) {
-  //     getData(
-  //       nextProps.options.exchange,
-  //       nextProps.options.market,
-  //       nextProps.options.timespan
-  //     );
-  //   }
-  // }
 
   render() {
     if (this.state.data.length === 0) {

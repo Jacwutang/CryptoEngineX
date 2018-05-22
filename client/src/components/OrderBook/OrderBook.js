@@ -15,30 +15,31 @@ class OrderBook extends Component {
 
   componentDidMount() {
     const { market, exchange } = this.props;
-    // getOrderData(market,exchange).then( (data) => {
-    //
-    // })
 
     getOrderData(market, exchange).then(payload =>
-      this.setState({ bids: payload.bids, asks: payload.asks })
+      this.setState({ bids: payload.bids, asks: payload.asks }, () => {
+        this.fetchData(market, exchange, 1);
+      })
     );
   }
 
-  renderOrderInformation() {
-    return (
-      <ul className="price-amt-ul">
-        {' '}
-        <li className="price-amt-item">
-          {' '}
-          <span> 123456 </span>
-          <span> hahahaha </span>{' '}
-        </li>
-      </ul>
-    );
+  fetchData(market, exchange, limit) {
+    const { bids, asks } = this.state;
+    this.interval = setInterval(() => {
+      getOrderData(market, exchange, limit).then(payload => {
+        this.setState({
+          bids: bids.concat(payload.bids),
+          asks: asks.concat(payload.asks),
+        });
+      });
+    }, 1000);
+  }
+
+  componentWillUnMount() {
+    clearInterval(this.interval);
   }
 
   render() {
-    console.log(this.state);
     const { market, exchange } = this.props;
     return (
       <div className="order-book-wrapper">

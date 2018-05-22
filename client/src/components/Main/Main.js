@@ -3,6 +3,7 @@ import axios from 'axios';
 import Chart from '../Chart/Chart';
 import OrderBook from '../OrderBook/OrderBook';
 import ChartOptions from '../ChartOptions/ChartOptions';
+import Transaction from '../Transaction/Transaction';
 import './Main.css';
 
 // https://crossorigin.me/
@@ -47,15 +48,20 @@ class Main extends Component {
 
     const { exchange, market, timespan } = this.state;
     return (
-      <div className="main-wrapper">
-        <ChartOptions
-          exchange={exchange}
-          market={market}
-          timespan={timespan}
-          toggleOption={this.updateState}
-        />
-        <Chart options={this.state} />
-        <OrderBook market={market} exchange={exchange} />
+      <div className="main-container">
+        <div className="main-wrapper">
+          <ChartOptions
+            exchange={exchange}
+            market={market}
+            timespan={timespan}
+            toggleOption={this.updateState}
+          />
+          <Chart options={this.state} />
+          <OrderBook market={market} exchange={exchange} />
+        </div>
+        <div className="right-wrapper">
+          <Transaction market={market} exchange={exchange} />
+        </div>
       </div>
     );
   }

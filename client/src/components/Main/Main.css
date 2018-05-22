@@ -6,7 +6,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  /* width: 100vw;  */
+
   width: 70vw;
   height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.right-wrapper {
+  width: 15vw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid gray;
 }
