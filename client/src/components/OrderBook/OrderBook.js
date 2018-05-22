@@ -19,7 +19,7 @@ class OrderBook extends Component {
     //
     // })
 
-    getOrderData(market, exchange);
+    // getOrderData(market, exchange);
   }
 
   renderOrderInformation() {

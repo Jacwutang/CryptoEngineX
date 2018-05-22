@@ -27,11 +27,11 @@ class Chart extends React.Component {
   }
 
   fetchData(exchange, market) {
-    // this.interval = setInterval(() => {
-    //   getNewData(exchange, market).then(newData => {
-    //     this.setState({ data: [...this.state.data, ...newData] });
-    //   });
-    // }, 2000);
+    this.interval = setInterval(() => {
+      getNewData(exchange, market).then(newData => {
+        this.setState({ data: [...this.state.data, ...newData] });
+      });
+    }, 2000);
   }
 
   componentWillUnMount() {
