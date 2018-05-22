@@ -19,3 +19,7 @@ export async function getOrderData(market, exchange, limit = 5) {
   // console.log(payload, 'payload');
   return payload;
 }
+
+export function randomIndex(length) {
+  return Math.floor(Math.random() * length);
+}

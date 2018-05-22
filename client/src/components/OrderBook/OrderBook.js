@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import './OrderBook.css';
 
-import { getOrderData } from './utils';
+import { getOrderData, randomIndex } from './utils';
 
 class OrderBook extends Component {
   constructor(props) {
     super(props);
 
-    this.leftItem = React.createRef();
-    this.rightItem = React.createRef();
+    this.leftList = React.createRef();
+    this.rightList = React.createRef();
+    // this.list = React.createRef();
 
     this.state = {
       bids: [],
@@ -44,6 +45,9 @@ class OrderBook extends Component {
 
   render() {
     const { market, exchange } = this.props;
+    let randomAskIndex = randomIndex(this.state.asks.length);
+    let randomBidIndex = randomIndex(this.state.bids.length);
+    // console.log(randomAskIndex, randomBidIndex);
     return (
       <div className="order-book-wrapper">
         <div className="order-book-title"> Order Book - {market} </div>
@@ -66,19 +70,24 @@ class OrderBook extends Component {
         </div>
 
         <div className="price-amt-row">
-          <ul className="price-amt-ul">
-            {' '}
+          <ul className="price-amt-ul" ref={this.leftList}>
             {this.state.asks.map((ask, idx) => {
-              let item = this.leftItem.current;
-              if (idx === this.state.asks.length - 1 && item !== null) {
-                item.classList.add(`item-ask`);
+              let list = this.leftList.current;
+              if (
+                idx > randomAskIndex &&
+                list !== null &&
+                list.children.length > 0
+              ) {
+                let li = list.children[randomAskIndex];
+
+                li.classList.add('item-ask');
                 setTimeout(() => {
-                  item.classList.remove(`item-ask`);
+                  li.classList.remove('item-ask');
                 }, 1000);
               }
 
               return (
-                <li key={idx} className="price-amt-item" ref={this.leftItem}>
+                <li key={idx} className="price-amt-item">
                   {' '}
                   <span> {ask[0]} </span>
                   <span> {ask[1]} </span>{' '}
@@ -87,18 +96,23 @@ class OrderBook extends Component {
             })}
           </ul>
 
-          <ul className="price-amt-ul">
-            {' '}
+          <ul className="price-amt-ul" ref={this.rightList}>
             {this.state.bids.map((bid, idx) => {
-              let item = this.rightItem.current;
-              if (idx === this.state.bids.length - 1 && item !== null) {
-                item.classList.add(`item-bid`);
+              let list = this.rightList.current;
+              if (
+                idx > randomBidIndex &&
+                list !== null &&
+                list.children.length > 0
+              ) {
+                let li = list.children[randomBidIndex];
+
+                li.classList.add(`item-bid`);
                 setTimeout(() => {
-                  item.classList.remove(`item-bid`);
-                }, 2500);
+                  li.classList.remove(`item-bid`);
+                }, 2000);
               }
               return (
-                <li key={idx} className="price-amt-item" ref={this.rightItem}>
+                <li key={idx} className="price-amt-item">
                   {' '}
                   <span> {bid[0]} </span>
                   <span> {bid[1]} </span>{' '}
