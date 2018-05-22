@@ -47,7 +47,7 @@ class Chart extends React.Component {
           .sort((a, b) => a.date.valueOf() - b.date.valueOf());
         this.setState({ data: sorted });
       });
-    }, 1000);
+    }, 2500);
   }
 
   componentWillUnMount() {

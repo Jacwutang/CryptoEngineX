@@ -17,9 +17,29 @@
 }
 
 .right-wrapper {
-  width: 15vw;
+  width: 20vw;
   text-align: center;
   display: flex;
   flex-direction: column;
   border: 1px solid gray;
+  /* height: 75vh; */
+  height: 100%;
+  margin-top: 5vh;
+  /* overflow-y: auto;
+  overflow-x: hidden; */
 }
+
+/* ::-webkit-scrollbar {
+  width: 7px;
+  height: 1px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 50px;
+  height: 1px;
+  width: 10px;
+} */

@@ -15,4 +15,21 @@
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  padding: 0;
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid white;
+}
+
+.has-failure {
+  color: #d9534f;
+}
+
+.has-success {
+  color: #5cb85c;
 }
