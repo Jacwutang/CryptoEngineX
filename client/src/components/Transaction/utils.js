@@ -2,7 +2,7 @@ const ccxt = require('ccxt');
 
 let sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-export async function getTrades(market, exchange, limit = 10) {
+export async function getTrades(market, exchange, limit = 15) {
   exchange = new ccxt[exchange]({
     proxy: 'https://cors-anywhere.herokuapp.com/',
     timeout: 10000,
