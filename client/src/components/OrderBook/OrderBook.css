@@ -74,6 +74,16 @@
   border-bottom: 1px solid gray;
 }
 
+.item-bid {
+  background: green;
+  transition-duration: 2.5s;
+}
+
+.item-ask {
+  background: #e00000;
+  transition-duration: 1s;
+}
+
 .price-amt-ul:li:first-child {
   border-bottom: none;
 }

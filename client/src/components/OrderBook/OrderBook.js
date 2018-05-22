@@ -7,6 +7,9 @@ class OrderBook extends Component {
   constructor(props) {
     super(props);
 
+    this.leftItem = React.createRef();
+    this.rightItem = React.createRef();
+
     this.state = {
       bids: [],
       asks: [],
@@ -65,24 +68,43 @@ class OrderBook extends Component {
         <div className="price-amt-row">
           <ul className="price-amt-ul">
             {' '}
-            {this.state.asks.map((ask, idx) => (
-              <li key={idx} className="price-amt-item">
-                {' '}
-                <span> {ask[0]} </span>
-                <span> {ask[1]} </span>{' '}
-              </li>
-            ))}
+            {this.state.asks.map((ask, idx) => {
+              let item = this.leftItem.current;
+              if (idx === this.state.asks.length - 1 && item !== null) {
+                item.classList.add(`item-ask`);
+                setTimeout(() => {
+                  item.classList.remove(`item-ask`);
+                }, 1000);
+              }
+
+              return (
+                <li key={idx} className="price-amt-item" ref={this.leftItem}>
+                  {' '}
+                  <span> {ask[0]} </span>
+                  <span> {ask[1]} </span>{' '}
+                </li>
+              );
+            })}
           </ul>
 
           <ul className="price-amt-ul">
             {' '}
-            {this.state.bids.map((bid, idx) => (
-              <li key={idx} className="price-amt-item">
-                {' '}
-                <span> {bid[0]} </span>
-                <span> {bid[1]} </span>{' '}
-              </li>
-            ))}
+            {this.state.bids.map((bid, idx) => {
+              let item = this.rightItem.current;
+              if (idx === this.state.bids.length - 1 && item !== null) {
+                item.classList.add(`item-bid`);
+                setTimeout(() => {
+                  item.classList.remove(`item-bid`);
+                }, 2500);
+              }
+              return (
+                <li key={idx} className="price-amt-item" ref={this.rightItem}>
+                  {' '}
+                  <span> {bid[0]} </span>
+                  <span> {bid[1]} </span>{' '}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
