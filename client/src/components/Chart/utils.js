@@ -27,13 +27,41 @@ const timeframeToMSHash = {
 
 let sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+export async function getNewData(exchange, market) {
+  exchange = new ccxt[exchange]({
+    proxy: 'https://cors-anywhere.herokuapp.com/',
+    enableRateLimit: true,
+    timeout: 10000,
+  });
+
+  await sleep(exchange.rateLimit);
+
+  let since = "'" + new Date().getTime() + "''";
+
+  let payload = await exchange.fetchOHLCV(market, '1m', since, 1);
+
+  let arrayObjs = payload.map(array => {
+    let obj = {};
+    obj.date = parseDateTime(array[0]);
+    obj.open = array[1];
+    obj.high = array[2];
+    obj.low = array[3];
+    obj.close = array[4];
+    obj.volume = array[5];
+
+    return obj;
+  });
+
+  return arrayObjs;
+}
+
 export async function getData(exchange, market, timespan) {
   // console.log(exchange, market, timespan, 'UTILS');
 
   exchange = new ccxt[exchange]({
     proxy: 'https://cors-anywhere.herokuapp.com/',
     enableRateLimit: true,
-    rateLimit: 1000,
+    timeout: 10000,
   });
 
   await sleep(exchange.rateLimit);
@@ -57,6 +85,8 @@ export async function getData(exchange, market, timespan) {
 
     return obj;
   });
+
+  arrayObjs.pop();
 
   return arrayObjs;
 }

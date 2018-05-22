@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Chart from '../Chart/Chart';
-import TradeDisplay from '../TradeDisplay/TradeDisplay';
+import OrderBook from '../OrderBook/OrderBook';
 import ChartOptions from '../ChartOptions/ChartOptions';
+import Transaction from '../Transaction/Transaction';
 import './Main.css';
 
 // https://crossorigin.me/
@@ -11,8 +12,8 @@ class Main extends Component {
     super();
 
     this.state = {
-      exchange: 'bitfinex',
-      market: 'BTC/USDT',
+      exchange: 'kraken',
+      market: 'BCH/EUR',
       timespan: '1d',
       loading: true,
     };
@@ -47,15 +48,20 @@ class Main extends Component {
 
     const { exchange, market, timespan } = this.state;
     return (
-      <div className="main-wrapper">
-        <ChartOptions
-          exchange={exchange}
-          market={market}
-          timespan={timespan}
-          toggleOption={this.updateState}
-        />
-        <Chart options={this.state} />
-        <TradeDisplay />
+      <div className="main-container">
+        <div className="main-wrapper">
+          <ChartOptions
+            exchange={exchange}
+            market={market}
+            timespan={timespan}
+            toggleOption={this.updateState}
+          />
+          <Chart options={this.state} />
+          <OrderBook market={market} exchange={exchange} />
+        </div>
+        <div className="right-wrapper">
+          <Transaction market={market} exchange={exchange} />
+        </div>
       </div>
     );
   }

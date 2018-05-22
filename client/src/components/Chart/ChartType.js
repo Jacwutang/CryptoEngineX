@@ -82,12 +82,6 @@ class CandleStickChartForContinuousIntraDay extends React.Component {
           yExtents={[d => [d.high, d.low]]}
           padding={{ top: 40, bottom: 20 }}
         >
-          <XAxis
-            axisAt="bottom"
-            orient="bottom"
-            tickStroke="#dee5ed"
-            stroke="#dee5ed"
-          />
           <YAxis axisAt="right" orient="right" ticks={5} tickStroke="#dee5ed" />
 
           <MouseCoordinateX
@@ -155,11 +149,10 @@ export default CandleStickChartForContinuousIntraDay;
 //   displayFormat={format('.4s')}
 //   fill="#0F0F0F"
 // />
-
 //
-// .react-stockcharts-tooltip {
-//        fill: red;
-//      }
-//      .react-stockcharts-tooltip-label {
-//        fill: green;
-//      }
+// <XAxis
+//   axisAt="bottom"
+//   orient="bottom"
+//   tickStroke="#dee5ed"
+//   stroke="#dee5ed"
+// />

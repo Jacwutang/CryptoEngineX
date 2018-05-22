@@ -1,16 +1,45 @@
 .order-book-wrapper {
   display: flex;
   flex-direction: column;
-  flex: 1;
+
   align-items: center;
+
+  width: 100%;
+  border: 1px solid gray;
+  padding: 5px;
 }
 
-.type-Asks {
+.order-book-title {
+  border-bottom: 1px solid white;
+}
+
+.has-failure {
   color: #d9534f;
 }
 
-.type-Bids {
+.has-success {
   color: #5cb85c;
+}
+
+.order-book-ask-bids {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  border-bottom: 1px solid white;
+}
+
+.order-book-half {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.price-amt-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 .type-header {
@@ -30,11 +59,12 @@
 .price-amt-ul {
   list-style: none;
   display: flex;
-  flex-direction: column;
-  align-items: space-around;
+  flex-direction: column-reverse;
+  justify-content: space-around;
+
   margin: 0;
   padding: 0;
-  width: 100%;
+  width: 50%;
 }
 
 .price-amt-item {
@@ -42,4 +72,8 @@
   flex-direction: row;
   justify-content: space-around;
   border-bottom: 1px solid gray;
+}
+
+.price-amt-ul:li:first-child {
+  border-bottom: none;
 }
