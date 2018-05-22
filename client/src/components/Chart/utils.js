@@ -31,7 +31,7 @@ export async function getNewData(exchange, market) {
   exchange = new ccxt[exchange]({
     proxy: 'https://cors-anywhere.herokuapp.com/',
     enableRateLimit: true,
-    timeout: 10000,
+    timeout: 30000,
   });
 
   await sleep(exchange.rateLimit);
@@ -40,19 +40,27 @@ export async function getNewData(exchange, market) {
 
   let payload = await exchange.fetchOHLCV(market, '1m', since, 1);
 
-  let arrayObjs = payload.map(array => {
-    let obj = {};
-    obj.date = parseDateTime(array[0]);
-    obj.open = array[1];
-    obj.high = array[2];
-    obj.low = array[3];
-    obj.close = array[4];
-    obj.volume = array[5];
+  try {
+    let payload = await exchange.fetchOHLCV(market, '1m', since, 1);
 
-    return obj;
-  });
+    let arrayObjs = payload.map(array => {
+      let obj = {};
+      obj.date = parseDateTime(array[0]);
+      obj.open = array[1];
+      obj.high = array[2];
+      obj.low = array[3];
+      obj.close = array[4];
+      obj.volume = array[5];
 
-  return arrayObjs;
+      return obj;
+    });
+
+    return arrayObjs;
+  } catch (error) {
+    let d = {};
+    d.date = new Date().getTime();
+    return d;
+  }
 }
 
 export async function getData(exchange, market, timespan) {
@@ -72,21 +80,26 @@ export async function getData(exchange, market, timespan) {
 
   let since = "'" + (currentUTCMilliSeconds - timeframeMS).toString() + "'";
 
-  let payload = await exchange.fetchOHLCV(market, timespan, since, 1000);
+  try {
+    let payload = await exchange.fetchOHLCV(market, timespan, since, 1000);
+    let arrayObjs = payload.map(array => {
+      let obj = {};
+      obj.date = parseDateTime(array[0]);
+      obj.open = array[1];
+      obj.high = array[2];
+      obj.low = array[3];
+      obj.close = array[4];
+      obj.volume = array[5];
 
-  let arrayObjs = payload.map(array => {
-    let obj = {};
-    obj.date = parseDateTime(array[0]);
-    obj.open = array[1];
-    obj.high = array[2];
-    obj.low = array[3];
-    obj.close = array[4];
-    obj.volume = array[5];
+      return obj;
+    });
 
-    return obj;
-  });
+    arrayObjs.pop();
 
-  arrayObjs.pop();
-
-  return arrayObjs;
+    return arrayObjs;
+  } catch (error) {
+    let d = {};
+    d.date = new Date().getTime();
+    return d;
+  }
 }

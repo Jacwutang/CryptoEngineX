@@ -17,16 +17,6 @@ class Chart extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   const { exchange, market, timespan } = this.props.options;
-  //
-  //   getData(exchange, market, timespan).then(newData => {
-  //     this.setState({ data: [...newData] }, () =>
-  //       this.fetchData(exchange, market)
-  //     );
-  //   });
-  // }
-
   async componentDidMount() {
     const { exchange, market, timespan } = this.props.options;
 

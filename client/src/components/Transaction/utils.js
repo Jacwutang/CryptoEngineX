@@ -5,7 +5,7 @@ let sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 export async function getTrades(market, exchange, limit = 20) {
   exchange = new ccxt[exchange]({
     proxy: 'https://cors-anywhere.herokuapp.com/',
-    timeout: 10000,
+    timeout: 3000,
   });
 
   await sleep(exchange.rateLimit);
