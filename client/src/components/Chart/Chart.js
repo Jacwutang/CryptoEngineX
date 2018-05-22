@@ -31,7 +31,7 @@ class Chart extends React.Component {
       getNewData(exchange, market).then(newData => {
         this.setState({ data: [...this.state.data, ...newData] });
       });
-    }, 2000);
+    }, 5000);
   }
 
   componentWillUnMount() {

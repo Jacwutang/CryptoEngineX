@@ -8,8 +8,8 @@ class OrderBook extends Component {
     super(props);
 
     this.state = {
-      price: [],
-      amount: [],
+      bids: [],
+      asks: [],
     };
   }
 
@@ -19,7 +19,9 @@ class OrderBook extends Component {
     //
     // })
 
-    // getOrderData(market, exchange);
+    getOrderData(market, exchange).then(payload =>
+      this.setState({ bids: payload.bids, asks: payload.asks })
+    );
   }
 
   renderOrderInformation() {
@@ -36,6 +38,7 @@ class OrderBook extends Component {
   }
 
   render() {
+    console.log(this.state);
     const { market, exchange } = this.props;
     return (
       <div className="order-book-wrapper">
@@ -61,20 +64,24 @@ class OrderBook extends Component {
         <div className="price-amt-row">
           <ul className="price-amt-ul">
             {' '}
-            <li className="price-amt-item">
-              {' '}
-              <span> 123456 </span>
-              <span> hahahaha </span>{' '}
-            </li>
+            {this.state.asks.map((ask, idx) => (
+              <li key={idx} className="price-amt-item">
+                {' '}
+                <span> {ask[0]} </span>
+                <span> {ask[1]} </span>{' '}
+              </li>
+            ))}
           </ul>
 
           <ul className="price-amt-ul">
             {' '}
-            <li className="price-amt-item">
-              {' '}
-              <span> 78910 </span>
-              <span> lololol </span>{' '}
-            </li>
+            {this.state.bids.map((bid, idx) => (
+              <li key={idx} className="price-amt-item">
+                {' '}
+                <span> {bid[0]} </span>
+                <span> {bid[1]} </span>{' '}
+              </li>
+            ))}
           </ul>
         </div>
       </div>

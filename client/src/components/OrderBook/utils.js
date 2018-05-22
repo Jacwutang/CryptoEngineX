@@ -8,8 +8,14 @@ export async function getOrderData(market, exchange) {
   });
 
   await sleep(exchange.rateLimit);
+  let limit = 5;
 
-  let payload = await exchange.fetchOrderBook(market);
+  let payload = await exchange.fetchOrderBook(market, 5);
 
-  console.log(payload, 'payload');
+  // {
+  //   bids: [ [price,amt], [price,amt]]
+  //   asks: []
+  // }
+
+  return payload;
 }

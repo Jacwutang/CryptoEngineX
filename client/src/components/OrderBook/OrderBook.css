@@ -3,15 +3,16 @@
   flex-direction: column;
 
   align-items: center;
-  height: 25vh;
+  /* height: 25vh; */
   width: 100%;
   border: 1px solid gray;
   padding: 5px;
+  max-height: 30vh;
 }
 
-.order-book-wrapper > div {
+/* .order-book-wrapper > div {
   margin: 5px;
-}
+} */
 
 .order-book-title {
   border-bottom: 1px solid white;
@@ -76,4 +77,8 @@
   flex-direction: row;
   justify-content: space-around;
   border-bottom: 1px solid gray;
+}
+
+ul li:last-child {
+  border-bottom: none;
 }
