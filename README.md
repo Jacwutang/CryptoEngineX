@@ -4,7 +4,7 @@
 
  ### Currently in experimental/proof of concept phase
 
-Visual demo of the 2 prototypes
+**Demo of 2 prototypes
 
 
 
