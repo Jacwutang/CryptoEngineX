@@ -73,7 +73,6 @@ class ChartOptions extends Component {
           <Select
             className="market-select"
             value={this.state.market}
-            onChange={this.handleSelectChange}
             searchable={false}
             clearable={false}
             options={all_markets.map(market => {
@@ -100,7 +99,6 @@ class ChartOptions extends Component {
         <Select
           className="timespan-select"
           value={this.state.timespan}
-          onChange={this.handleSelectChange}
           searchable={false}
           clearable={false}
           options={[
@@ -116,3 +114,5 @@ class ChartOptions extends Component {
 }
 
 export default ChartOptions;
+
+// onChange={this.handleSelectChange}
