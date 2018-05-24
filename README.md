@@ -6,9 +6,9 @@
  
  ### Frontend
 
- ``` 
- React, D3, CCXT Cryptocurrency Exchange Trading Library
-```
+* React
+* D3
+* CCXT Cryptocurrency Exchange Trading Library
 ### Visual Demo of prototypes
 
 
