@@ -33,47 +33,52 @@ class ChartOptions extends Component {
     this.props.toggleOption(...args);
   }
 
-  handleChange(event, field) {
-    if (field === 'exchange') {
-      for (let ref in this.refs) {
-        this.refs[ref].classList.remove('active');
-      }
-
-      event.target.classList.add('active');
-    }
-
-    //setState to change exchange.
-    this.setState({ [field]: event.target.value }, () => {
-      getMarketData(this.state.exchange).then(markets => {
-        this.setState({ all_markets: markets, market: markets[0] }, () => {
-          this.updateParent(
-            'exchange',
-            this.state.exchange,
-            'market',
-            markets[0]
-          );
-        });
-      });
-    });
+  handleChange(field) {
+    this.setState({ [field]: field });
   }
 
-  handleSelectChange = selectedOption => {
-    let field = selectedOption.labelKey;
-    this.setState({ [field]: selectedOption.value }, () => {
-      this.updateParent(field, selectedOption.value);
-    });
-  };
+  // handleChange(event, field) {
+  //   if (field === 'exchange') {
+  //     for (let ref in this.refs) {
+  //       this.refs[ref].classList.remove('active');
+  //     }
+  //
+  //     event.target.classList.add('active');
+  //   }
+  //
+  //   //setState to change exchange.
+  //   this.setState({ [field]: event.target.value }, () => {
+  //     getMarketData(this.state.exchange).then(markets => {
+  //       this.setState({ all_markets: markets, market: markets[0] }, () => {
+  //         this.updateParent(
+  //           'exchange',
+  //           this.state.exchange,
+  //           'market',
+  //           markets[0]
+  //         );
+  //       });
+  //     });
+  //   });
+  // }
+
+  // handleSelectChange = selectedOption => {
+  //   let field = selectedOption.labelKey;
+  //   this.setState({ [field]: selectedOption.value }, () => {
+  //     this.updateParent(field, selectedOption.value);
+  //   });
+  // };
 
   render() {
-    const { all_markets } = this.state;
+    const { all_markets, market, timespan } = this.state;
 
     return (
       <div className="options-list">
         <div className="market-exchange">
           <Select
             className="market-select"
-            value={this.state.market}
+            value={market}
             searchable={false}
+            onChange={this.handleChange('market')}
             clearable={false}
             options={all_markets.map(market => {
               return {
@@ -98,9 +103,10 @@ class ChartOptions extends Component {
         </div>
         <Select
           className="timespan-select"
-          value={this.state.timespan}
+          value={timespan}
           searchable={false}
           clearable={false}
+          onChange={this.handleChange('timespan')}
           options={[
             { value: '1m', label: '1m', labelKey: 'timespan' },
             { value: '1h', label: '1h', labelKey: 'timespan' },
