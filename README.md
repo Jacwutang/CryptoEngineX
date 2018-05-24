@@ -2,7 +2,7 @@
 
 ## Cryptocurrency Trading Platform
 
- *** Currently in experimental/proof of concept phase ***
+ ** Currently in experimental/proof of concept phase **
  
  ### Frontend
 
