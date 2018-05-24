@@ -3,6 +3,10 @@
 # Cryptocurrency Trading Platform
 
  ### Currently in experimental/proof of concept phase
+ 
+ ## Frontend
+ <hr/>
+ React, D3, CCXT Cryptocurrency Exchange Trading Library
 
 **Demo of 2 prototypes
 
