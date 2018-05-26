@@ -6,6 +6,7 @@ import 'react-select/dist/react-select.css';
 import { FadingCircle } from 'better-react-spinkit';
 
 import ChartOptionsMarket from './ChartOptionsMarket/ChartOptionsMarket';
+import ChartOptionsTimespan from './ChartOptionsTimespan/ChartOptionsTimespan';
 
 class ChartOptions extends Component {
   constructor(props) {
@@ -96,20 +97,12 @@ class ChartOptions extends Component {
               KRAKEN{' '}
             </button>
           </ul>
+
+          <ChartOptionsTimespan
+            timespan={timespan}
+            updateParent={this.receiveUpdateFromChild}
+          />
         </div>
-        <Select
-          className="timespan-select"
-          value={timespan}
-          searchable={false}
-          clearable={false}
-          onChange={this.handleSelect}
-          options={[
-            { value: '1m', label: '1m', key: 'timespan' },
-            { value: '1h', label: '1h', key: 'timespan' },
-            { value: '1d', label: '1d', key: 'timespan' },
-            { value: '1M', label: '1M', key: 'timespan' },
-          ]}
-        />
       </div>
     );
   }
