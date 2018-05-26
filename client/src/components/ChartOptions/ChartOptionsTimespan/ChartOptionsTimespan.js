@@ -12,8 +12,6 @@ class ChartOptionsTimespan extends Component {
     this.handleSelect = this.handleSelect.bind(this);
   }
 
-  componentDidMount() {}
-
   handleSelect(selectedOption) {
     let field = selectedOption.key;
     let value = selectedOption.value;

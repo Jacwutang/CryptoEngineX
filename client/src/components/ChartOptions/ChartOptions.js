@@ -18,37 +18,15 @@ class ChartOptions extends Component {
       timespan: this.props.timespan,
     };
 
-    // this.handleSelect = this.handleSelect.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.receiveUpdateFromChild = this.receiveUpdateFromChild.bind(this);
   }
-
-  // componentDidMount() {
-  //   // const { exchange } = this.state;
-  //   // this.refs[exchange].classList.add('active');
-  //
-  //   //Grab markets from default exchange.
-  //   getMarketData(this.state.exchange).then(markets => {
-  //     this.setState({ all_markets: [...markets] });
-  //   });
-  // }
 
   receiveUpdateFromChild(field, value) {
     this.setState({ [field]: value }, () => {
       this.props.updateParent(field, value);
     });
   }
-
-  // handleSelect(selectedOption) {
-  //   let field = selectedOption.key;
-  //   let value = selectedOption.value;
-  //
-  //   //update select fields
-  //   this.setState({ [field]: value }, () => {
-  //     //update parent container with new timespan or market.
-  //     this.updateParent(field, value);
-  //   });
-  // }
 
   handleClick(field) {
     return e => {
@@ -61,19 +39,6 @@ class ChartOptions extends Component {
       });
     };
   }
-
-  // handleChange(event, field) {
-  //   if (field === 'exchange') {
-  //     for (let ref in this.refs) {
-  //       this.refs[ref].classList.remove('active');
-  //     }
-  //
-  //     event.target.classList.add('active');
-  //   }
-  //
-  //   //setState to change exchange.
-
-  // }
 
   render() {
     const { all_markets, market, exchange, timespan } = this.state;
@@ -109,18 +74,3 @@ class ChartOptions extends Component {
 }
 
 export default ChartOptions;
-
-// <Select
-//   className="market-select"
-//   value={market}
-//   searchable={false}
-//   onChange={this.handleSelect}
-//   clearable={false}
-//   options={all_markets.map(market => {
-//     return {
-//       value: market,
-//       label: market,
-//       key: 'market',
-//     };
-//   })}
-// />
