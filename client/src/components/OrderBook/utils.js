@@ -6,6 +6,7 @@ export async function getOrderData(market, exchange, limit = 5) {
   exchange = new ccxt[exchange]({
     proxy: 'https://cors-anywhere.herokuapp.com/',
     timeout: 10000,
+    enableRateLimit: true,
   });
 
   await sleep(exchange.rateLimit);

@@ -40,7 +40,7 @@ class OrderBook extends Component {
           });
         }
       });
-    }, 1000);
+    }, 2500);
   }
 
   componentWillUnmount() {
