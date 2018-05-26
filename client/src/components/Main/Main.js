@@ -30,7 +30,7 @@ class Main extends Component {
       this.setState({ loading: true, [args[0]]: args[1] }, () => {
         this.setState({ loading: false });
       });
-    } else {
+    } else if (args.length === 4) {
       this.setState(
         { loading: true, [args[0]]: args[1], [args[2]]: args[3] },
         () => {

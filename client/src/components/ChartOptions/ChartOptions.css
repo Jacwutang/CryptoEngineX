@@ -43,3 +43,8 @@
   width: 8vw;
   z-index: 100;
 }
+
+.exchange-select {
+  width: 15vw;
+  z-index: 100;
+}

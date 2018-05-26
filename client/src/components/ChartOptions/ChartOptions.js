@@ -7,6 +7,7 @@ import { FadingCircle } from 'better-react-spinkit';
 
 import ChartOptionsMarket from './ChartOptionsMarket/ChartOptionsMarket';
 import ChartOptionsTimespan from './ChartOptionsTimespan/ChartOptionsTimespan';
+import ChartOptionsExchange from './ChartOptionsExchange/ChartOptionsExchange';
 
 class ChartOptions extends Component {
   constructor(props) {
@@ -18,26 +19,31 @@ class ChartOptions extends Component {
       timespan: this.props.timespan,
     };
 
-    this.handleClick = this.handleClick.bind(this);
     this.receiveUpdateFromChild = this.receiveUpdateFromChild.bind(this);
   }
 
-  receiveUpdateFromChild(field, value) {
-    this.setState({ [field]: value }, () => {
-      this.props.updateParent(field, value);
-    });
-  }
-
-  handleClick(field) {
-    return e => {
-      let value = e.target.value;
-      this.setState({ [field]: value }, () => {
-        getMarketData(this.state[field]).then(markets => {
-          //if a different exchange is selected, parent needs to be updated with exchange, and market.
-          this.props.updateParent(field, value, 'market', markets[0]);
+  receiveUpdateFromChild(...args) {
+    switch (args.length) {
+      case 2:
+        let [field, value] = [args[0], args[1]];
+        this.setState({ [field]: value }, () => {
+          this.props.updateParent(field, value);
         });
-      });
-    };
+        break;
+      case 4:
+        let [field1, value1, field2, value2] = [
+          args[0],
+          args[1],
+          args[2],
+          args[3],
+        ];
+        this.setState({ [field1]: value1, [field2]: value2 }, () => {
+          this.props.updateParent(field1, value1, field2, value2);
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   render() {
@@ -51,17 +57,11 @@ class ChartOptions extends Component {
             updateParent={this.receiveUpdateFromChild}
             market={market}
           />
-          <ul className="exchanges-list">
-            <button
-              onClick={this.handleClick('exchange')}
-              ref="kraken"
-              className="exchange-btn"
-              value="kraken"
-            >
-              {' '}
-              KRAKEN{' '}
-            </button>
-          </ul>
+
+          <ChartOptionsExchange
+            exchanges={['kraken']}
+            updateParent={this.receiveUpdateFromChild}
+          />
 
           <ChartOptionsTimespan
             timespan={timespan}
