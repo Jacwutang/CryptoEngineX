@@ -5,6 +5,8 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { FadingCircle } from 'better-react-spinkit';
 
+import ChartOptionsMarket from './ChartOptionsMarket/ChartOptionsMarket';
+
 class ChartOptions extends Component {
   constructor(props) {
     super(props);
@@ -13,37 +15,39 @@ class ChartOptions extends Component {
       market: this.props.market,
       exchange: this.props.exchange,
       timespan: this.props.timespan,
-      all_markets: [],
     };
 
-    this.handleSelect = this.handleSelect.bind(this);
+    // this.handleSelect = this.handleSelect.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.receiveUpdateFromChild = this.receiveUpdateFromChild.bind(this);
   }
 
-  componentDidMount() {
-    // const { exchange } = this.state;
-    // this.refs[exchange].classList.add('active');
+  // componentDidMount() {
+  //   // const { exchange } = this.state;
+  //   // this.refs[exchange].classList.add('active');
+  //
+  //   //Grab markets from default exchange.
+  //   getMarketData(this.state.exchange).then(markets => {
+  //     this.setState({ all_markets: [...markets] });
+  //   });
+  // }
 
-    //Grab markets from default exchange.
-    getMarketData(this.state.exchange).then(markets => {
-      this.setState({ all_markets: [...markets] });
-    });
-  }
-
-  updateParent(...args) {
-    this.props.toggleOption(...args);
-  }
-
-  handleSelect(selectedOption) {
-    let field = selectedOption.key;
-    let value = selectedOption.value;
-
-    //update select fields
+  receiveUpdateFromChild(field, value) {
     this.setState({ [field]: value }, () => {
-      //update parent container with new timespan or market.
-      this.updateParent(field, value);
+      this.props.updateParent(field, value);
     });
   }
+
+  // handleSelect(selectedOption) {
+  //   let field = selectedOption.key;
+  //   let value = selectedOption.value;
+  //
+  //   //update select fields
+  //   this.setState({ [field]: value }, () => {
+  //     //update parent container with new timespan or market.
+  //     this.updateParent(field, value);
+  //   });
+  // }
 
   handleClick(field) {
     return e => {
@@ -51,7 +55,7 @@ class ChartOptions extends Component {
       this.setState({ [field]: value }, () => {
         getMarketData(this.state[field]).then(markets => {
           //if a different exchange is selected, parent needs to be updated with exchange, and market.
-          this.updateParent(field, value, 'market', markets[0]);
+          this.props.updateParent(field, value, 'market', markets[0]);
         });
       });
     };
@@ -71,26 +75,16 @@ class ChartOptions extends Component {
   // }
 
   render() {
-    const { all_markets, market, timespan } = this.state;
+    const { all_markets, market, exchange, timespan } = this.state;
 
     return (
       <div className="options-list">
         <div className="market-exchange">
-          <Select
-            className="market-select"
-            value={market}
-            searchable={false}
-            onChange={this.handleSelect}
-            clearable={false}
-            options={all_markets.map(market => {
-              return {
-                value: market,
-                label: market,
-                key: 'market',
-              };
-            })}
+          <ChartOptionsMarket
+            exchange={exchange}
+            updateParent={this.receiveUpdateFromChild}
+            market={market}
           />
-
           <ul className="exchanges-list">
             <button
               onClick={this.handleClick('exchange')}
@@ -122,3 +116,18 @@ class ChartOptions extends Component {
 }
 
 export default ChartOptions;
+
+// <Select
+//   className="market-select"
+//   value={market}
+//   searchable={false}
+//   onChange={this.handleSelect}
+//   clearable={false}
+//   options={all_markets.map(market => {
+//     return {
+//       value: market,
+//       label: market,
+//       key: 'market',
+//     };
+//   })}
+// />

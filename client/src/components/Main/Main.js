@@ -18,14 +18,14 @@ class Main extends Component {
       loading: true,
     };
 
-    this.updateState = this.updateState.bind(this);
+    this.receiveUpdateFromChild = this.receiveUpdateFromChild.bind(this);
   }
 
   componentDidMount() {
     this.setState({ loading: false });
   }
 
-  updateState(...args) {
+  receiveUpdateFromChild(...args) {
     if (args.length === 2) {
       this.setState({ loading: true, [args[0]]: args[1] }, () => {
         this.setState({ loading: false });
@@ -53,7 +53,7 @@ class Main extends Component {
             exchange={exchange}
             market={market}
             timespan={timespan}
-            toggleOption={this.updateState}
+            updateParent={this.receiveUpdateFromChild}
           />
           <Chart options={this.state} />
           {/*<OrderBook market={market} exchange={exchange} /> */}
