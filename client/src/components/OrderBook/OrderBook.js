@@ -24,12 +24,12 @@ class OrderBook extends Component {
 
     getOrderData(market, exchange).then(payload =>
       this.setState({ bids: payload.bids, asks: payload.asks }, () => {
-        this.fetchData(market, exchange, 1);
+        this.fetchSingleOrder(market, exchange, 1);
       })
     );
   }
 
-  fetchData(market, exchange, limit) {
+  fetchSingleOrder(market, exchange, limit) {
     const { bids, asks } = this.state;
     this.interval = setInterval(() => {
       getOrderData(market, exchange, limit).then(payload => {

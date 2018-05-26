@@ -59,7 +59,7 @@ class Main extends Component {
           <OrderBook market={market} exchange={exchange} />
         </div>
         <div className="right-wrapper">
-          {/*<Transaction market={market} exchange={exchange} /> */}
+          <Transaction market={market} exchange={exchange} />
         </div>
       </div>
     );

@@ -7,36 +7,38 @@ class Transaction extends Component {
     super(props);
 
     this.item = React.createRef();
+    this.interval = null;
 
     this.state = {
-      isMounted: false,
       trades: [],
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const { market, exchange } = this.props;
 
-    let payload = await getTrades(market, exchange);
-
-    this.setState({ isMounted: true, trades: payload }, () => {
-      if (this.state.isMounted) {
-        this.fetchData(market, exchange);
-      }
+    getTrades(market, exchange).then(payload => {
+      this.setState({ trades: payload }, () => {
+        this.fetchSingleTrade(market, exchange);
+      });
     });
   }
 
-  componentWillUnMount() {
-    clearInterval(this.interval);
-    this.setState({ isMounted: false });
-  }
-
-  fetchData(market, exchange) {
+  fetchSingleTrade(market, exchange) {
     this.interval = setInterval(() => {
       getTrades(market, exchange, 1).then(payload => {
-        this.setState({ trades: [...this.state.trades.slice(1), ...payload] });
+        if (this.interval) {
+          this.setState({
+            trades: [...this.state.trades.slice(1), ...payload],
+          });
+        }
       });
     }, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+    this.interval = null;
   }
 
   render() {
