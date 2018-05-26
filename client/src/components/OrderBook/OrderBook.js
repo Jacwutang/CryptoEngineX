@@ -15,6 +15,8 @@ class OrderBook extends Component {
       bids: [],
       asks: [],
     };
+
+    this.interval = null;
   }
 
   componentDidMount() {
@@ -31,23 +33,26 @@ class OrderBook extends Component {
     const { bids, asks } = this.state;
     this.interval = setInterval(() => {
       getOrderData(market, exchange, limit).then(payload => {
-        this.setState({
-          bids: bids.concat(payload.bids),
-          asks: asks.concat(payload.asks),
-        });
+        if (this.interval) {
+          this.setState({
+            bids: bids.concat(payload.bids),
+            asks: asks.concat(payload.asks),
+          });
+        }
       });
     }, 1000);
   }
 
-  componentWillUnMount() {
+  componentWillUnmount() {
     clearInterval(this.interval);
+    this.interval = null;
   }
 
   render() {
     const { market, exchange } = this.props;
     let randomAskIndex = randomIndex(this.state.asks.length);
     let randomBidIndex = randomIndex(this.state.bids.length);
-    // console.log(randomAskIndex, randomBidIndex);
+
     return (
       <div className="order-book-wrapper">
         <div className="order-book-title"> Order Book - {market} </div>
