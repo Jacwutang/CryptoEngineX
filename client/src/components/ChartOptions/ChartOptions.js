@@ -16,14 +16,15 @@ class ChartOptions extends Component {
       all_markets: [],
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    const { exchange } = this.state;
-    this.refs[exchange].classList.add('active');
+    // const { exchange } = this.state;
+    // this.refs[exchange].classList.add('active');
 
-    //Grab default markets from default exchange.
+    //Grab markets from default exchange.
     getMarketData(this.state.exchange).then(markets => {
       this.setState({ all_markets: [...markets] });
     });
@@ -33,8 +34,27 @@ class ChartOptions extends Component {
     this.props.toggleOption(...args);
   }
 
-  handleChange(field) {
-    this.setState({ [field]: field });
+  handleSelect(selectedOption) {
+    let field = selectedOption.key;
+    let value = selectedOption.value;
+
+    //update select fields
+    this.setState({ [field]: value }, () => {
+      //update parent container with new timespan or market.
+      this.updateParent(field, value);
+    });
+  }
+
+  handleClick(field) {
+    return e => {
+      let value = e.target.value;
+      this.setState({ [field]: value }, () => {
+        getMarketData(this.state[field]).then(markets => {
+          //if a different exchange is selected, parent needs to be updated with exchange, and market.
+          this.updateParent(field, value, 'market', markets[0]);
+        });
+      });
+    };
   }
 
   // handleChange(event, field) {
@@ -47,18 +67,7 @@ class ChartOptions extends Component {
   //   }
   //
   //   //setState to change exchange.
-  //   this.setState({ [field]: event.target.value }, () => {
-  //     getMarketData(this.state.exchange).then(markets => {
-  //       this.setState({ all_markets: markets, market: markets[0] }, () => {
-  //         this.updateParent(
-  //           'exchange',
-  //           this.state.exchange,
-  //           'market',
-  //           markets[0]
-  //         );
-  //       });
-  //     });
-  //   });
+
   // }
 
   // handleSelectChange = selectedOption => {
@@ -78,20 +87,20 @@ class ChartOptions extends Component {
             className="market-select"
             value={market}
             searchable={false}
-            onChange={this.handleChange('market')}
+            onChange={this.handleSelect}
             clearable={false}
             options={all_markets.map(market => {
               return {
                 value: market,
                 label: market,
-                labelKey: 'market',
+                key: 'market',
               };
             })}
           />
 
           <ul className="exchanges-list">
             <button
-              onClick={e => this.handleChange(e, 'exchange')}
+              onClick={this.handleClick('exchange')}
               ref="kraken"
               className="exchange-btn"
               value="kraken"
@@ -106,12 +115,12 @@ class ChartOptions extends Component {
           value={timespan}
           searchable={false}
           clearable={false}
-          onChange={this.handleChange('timespan')}
+          onChange={this.handleSelect}
           options={[
-            { value: '1m', label: '1m', labelKey: 'timespan' },
-            { value: '1h', label: '1h', labelKey: 'timespan' },
-            { value: '1d', label: '1d', labelKey: 'timespan' },
-            { value: '1M', label: '1M', labelKey: 'timespan' },
+            { value: '1m', label: '1m', key: 'timespan' },
+            { value: '1h', label: '1h', key: 'timespan' },
+            { value: '1d', label: '1d', key: 'timespan' },
+            { value: '1M', label: '1M', key: 'timespan' },
           ]}
         />
       </div>
@@ -120,5 +129,3 @@ class ChartOptions extends Component {
 }
 
 export default ChartOptions;
-
-// onChange={this.handleSelectChange}
