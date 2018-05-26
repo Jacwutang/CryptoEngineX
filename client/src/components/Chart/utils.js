@@ -28,6 +28,8 @@ const timeframeToMSHash = {
 let sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function getNewData(exchange, market) {
+  // grab newest data point
+
   exchange = new ccxt[exchange]({
     proxy: 'https://cors-anywhere.herokuapp.com/',
     enableRateLimit: true,
@@ -54,7 +56,6 @@ export async function getNewData(exchange, market) {
 
       return obj;
     });
-
     return arrayObjs;
   } catch (error) {
     let d = {};
@@ -64,7 +65,7 @@ export async function getNewData(exchange, market) {
 }
 
 export async function getData(exchange, market, timespan) {
-  // console.log(exchange, market, timespan, 'UTILS');
+  //batch data from specified params.
 
   exchange = new ccxt[exchange]({
     proxy: 'https://cors-anywhere.herokuapp.com/',
@@ -74,12 +75,16 @@ export async function getData(exchange, market, timespan) {
 
   await sleep(exchange.rateLimit);
 
+  //get current time in utc ms
   let currentUTCMilliSeconds = new Date().getTime();
 
+  //determine the timeframe param for fetchOHLCV call.
   let timeframeMS = timeframeToMSHash[timespan];
 
+  //the time difference between now and the timeframe. Ensuring that data fetched begins at "since" and no further back.
   let since = "'" + (currentUTCMilliSeconds - timeframeMS).toString() + "'";
 
+  //try-catch. Sometimes ccxt returns rateLimit error. Handle the error and return a default date object, so that chart doesn't crash/
   try {
     let payload = await exchange.fetchOHLCV(market, timespan, since, 1000);
     let arrayObjs = payload.map(array => {
@@ -95,7 +100,6 @@ export async function getData(exchange, market, timespan) {
     });
 
     arrayObjs.pop();
-
     return arrayObjs;
   } catch (error) {
     let d = {};

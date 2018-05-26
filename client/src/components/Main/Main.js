@@ -18,31 +18,30 @@ class Main extends Component {
       loading: true,
     };
 
-    this.updateState = this.updateState.bind(this);
+    this.receiveUpdateFromChild = this.receiveUpdateFromChild.bind(this);
   }
 
   componentDidMount() {
     this.setState({ loading: false });
   }
 
-  updateState(...args) {
+  receiveUpdateFromChild(...args) {
     if (args.length === 2) {
-      this.setState({ loading: true }, () => {
-        this.setState({ [args[0]]: args[1] }, () => {
-          this.setState({ loading: false });
-        });
+      this.setState({ loading: true, [args[0]]: args[1] }, () => {
+        this.setState({ loading: false });
       });
     } else {
-      this.setState({ loading: true }, () => {
-        this.setState({ [args[0]]: args[1], [args[2]]: args[3] }, () => {
+      this.setState(
+        { loading: true, [args[0]]: args[1], [args[2]]: args[3] },
+        () => {
           this.setState({ loading: false });
-        });
-      });
+        }
+      );
     }
   }
 
   render() {
-    if (this.state.loading === true) {
+    if (this.state.loading) {
       return null;
     }
 
@@ -54,13 +53,13 @@ class Main extends Component {
             exchange={exchange}
             market={market}
             timespan={timespan}
-            toggleOption={this.updateState}
+            updateParent={this.receiveUpdateFromChild}
           />
           <Chart options={this.state} />
-          <OrderBook market={market} exchange={exchange} />
+          {/*<OrderBook market={market} exchange={exchange} /> */}
         </div>
         <div className="right-wrapper">
-          <Transaction market={market} exchange={exchange} />
+          {/*<Transaction market={market} exchange={exchange} /> */}
         </div>
       </div>
     );

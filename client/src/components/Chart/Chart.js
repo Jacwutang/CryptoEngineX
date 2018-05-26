@@ -13,19 +13,19 @@ class Chart extends React.Component {
 
     this.state = {
       data: [],
-      isMounted: false,
+      loading: true,
     };
+
+    this.interval = null;
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const { exchange, market, timespan } = this.props.options;
 
-    let newData = await getData(exchange, market, timespan);
-
-    this.setState({ data: [...newData], isMounted: true }, () => {
-      if (this.state.isMounted) {
+    getData(exchange, market, timespan).then(data => {
+      this.setState({ data: [...data], loading: false }, () => {
         this.fetchData(exchange, market);
-      }
+      });
     });
   }
 
@@ -35,18 +35,20 @@ class Chart extends React.Component {
         let sorted = this.state.data
           .concat(newData)
           .sort((a, b) => a.date.valueOf() - b.date.valueOf());
-        this.setState({ data: sorted });
+        if (this.interval) {
+          this.setState({ data: sorted });
+        }
       });
     }, 5000);
   }
 
-  componentWillUnMount() {
+  componentWillUnmount() {
     clearInterval(this.interval);
-    this.setState({ isMounted: false });
+    this.interval = null;
   }
 
   render() {
-    if (this.state.data.length === 0) {
+    if (this.state.loading) {
       return (
         <div className="chart-spinner">
           {' '}

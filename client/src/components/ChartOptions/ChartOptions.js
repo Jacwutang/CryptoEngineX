@@ -5,6 +5,9 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { FadingCircle } from 'better-react-spinkit';
 
+import ChartOptionsMarket from './ChartOptionsMarket/ChartOptionsMarket';
+import ChartOptionsTimespan from './ChartOptionsTimespan/ChartOptionsTimespan';
+
 class ChartOptions extends Component {
   constructor(props) {
     super(props);
@@ -13,85 +16,44 @@ class ChartOptions extends Component {
       market: this.props.market,
       exchange: this.props.exchange,
       timespan: this.props.timespan,
-      all_markets: [],
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.receiveUpdateFromChild = this.receiveUpdateFromChild.bind(this);
   }
 
-  componentDidMount() {
-    const { exchange } = this.state;
-    this.refs[exchange].classList.add('active');
-
-    //Grab default markets from default exchange.
-    getMarketData(this.state.exchange).then(markets => {
-      this.setState({ all_markets: [...markets] });
+  receiveUpdateFromChild(field, value) {
+    this.setState({ [field]: value }, () => {
+      this.props.updateParent(field, value);
     });
   }
 
-  updateParent(...args) {
-    this.props.toggleOption(...args);
+  handleClick(field) {
+    return e => {
+      let value = e.target.value;
+      this.setState({ [field]: value }, () => {
+        getMarketData(this.state[field]).then(markets => {
+          //if a different exchange is selected, parent needs to be updated with exchange, and market.
+          this.props.updateParent(field, value, 'market', markets[0]);
+        });
+      });
+    };
   }
-
-  handleChange(field) {
-    this.setState({ [field]: field });
-  }
-
-  // handleChange(event, field) {
-  //   if (field === 'exchange') {
-  //     for (let ref in this.refs) {
-  //       this.refs[ref].classList.remove('active');
-  //     }
-  //
-  //     event.target.classList.add('active');
-  //   }
-  //
-  //   //setState to change exchange.
-  //   this.setState({ [field]: event.target.value }, () => {
-  //     getMarketData(this.state.exchange).then(markets => {
-  //       this.setState({ all_markets: markets, market: markets[0] }, () => {
-  //         this.updateParent(
-  //           'exchange',
-  //           this.state.exchange,
-  //           'market',
-  //           markets[0]
-  //         );
-  //       });
-  //     });
-  //   });
-  // }
-
-  // handleSelectChange = selectedOption => {
-  //   let field = selectedOption.labelKey;
-  //   this.setState({ [field]: selectedOption.value }, () => {
-  //     this.updateParent(field, selectedOption.value);
-  //   });
-  // };
 
   render() {
-    const { all_markets, market, timespan } = this.state;
+    const { all_markets, market, exchange, timespan } = this.state;
 
     return (
       <div className="options-list">
         <div className="market-exchange">
-          <Select
-            className="market-select"
-            value={market}
-            searchable={false}
-            onChange={this.handleChange('market')}
-            clearable={false}
-            options={all_markets.map(market => {
-              return {
-                value: market,
-                label: market,
-                labelKey: 'market',
-              };
-            })}
+          <ChartOptionsMarket
+            exchange={exchange}
+            updateParent={this.receiveUpdateFromChild}
+            market={market}
           />
-
           <ul className="exchanges-list">
             <button
-              onClick={e => this.handleChange(e, 'exchange')}
+              onClick={this.handleClick('exchange')}
               ref="kraken"
               className="exchange-btn"
               value="kraken"
@@ -100,25 +62,15 @@ class ChartOptions extends Component {
               KRAKEN{' '}
             </button>
           </ul>
+
+          <ChartOptionsTimespan
+            timespan={timespan}
+            updateParent={this.receiveUpdateFromChild}
+          />
         </div>
-        <Select
-          className="timespan-select"
-          value={timespan}
-          searchable={false}
-          clearable={false}
-          onChange={this.handleChange('timespan')}
-          options={[
-            { value: '1m', label: '1m', labelKey: 'timespan' },
-            { value: '1h', label: '1h', labelKey: 'timespan' },
-            { value: '1d', label: '1d', labelKey: 'timespan' },
-            { value: '1M', label: '1M', labelKey: 'timespan' },
-          ]}
-        />
       </div>
     );
   }
 }
 
 export default ChartOptions;
-
-// onChange={this.handleSelectChange}
