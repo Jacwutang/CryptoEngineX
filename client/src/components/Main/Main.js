@@ -27,17 +27,16 @@ class Main extends Component {
 
   updateState(...args) {
     if (args.length === 2) {
-      this.setState({ loading: true }, () => {
-        this.setState({ [args[0]]: args[1] }, () => {
-          this.setState({ loading: false });
-        });
+      this.setState({ loading: true, [args[0]]: args[1] }, () => {
+        this.setState({ loading: false });
       });
     } else {
-      this.setState({ loading: true }, () => {
-        this.setState({ [args[0]]: args[1], [args[2]]: args[3] }, () => {
+      this.setState(
+        { loading: true, [args[0]]: args[1], [args[2]]: args[3] },
+        () => {
           this.setState({ loading: false });
-        });
-      });
+        }
+      );
     }
   }
 

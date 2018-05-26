@@ -70,13 +70,6 @@ class ChartOptions extends Component {
 
   // }
 
-  // handleSelectChange = selectedOption => {
-  //   let field = selectedOption.labelKey;
-  //   this.setState({ [field]: selectedOption.value }, () => {
-  //     this.updateParent(field, selectedOption.value);
-  //   });
-  // };
-
   render() {
     const { all_markets, market, timespan } = this.state;
 
