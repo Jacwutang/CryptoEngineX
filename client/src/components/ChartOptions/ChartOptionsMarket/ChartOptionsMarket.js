@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { getMarketData } from '../utils';
+import { FadingCircle } from 'better-react-spinkit';
 
 class ChartOptionsMarket extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class ChartOptionsMarket extends Component {
     this.state = {
       marketsList: [],
       market: this.props.market,
+      loading: true,
     };
 
     this.handleSelect = this.handleSelect.bind(this);
@@ -21,7 +23,7 @@ class ChartOptionsMarket extends Component {
 
     //Grab markets from default exchange.
     getMarketData(this.props.exchange).then(markets => {
-      this.setState({ marketsList: [...markets] });
+      this.setState({ marketsList: [...markets], loading: false });
     });
   }
 
@@ -39,6 +41,14 @@ class ChartOptionsMarket extends Component {
 
   render() {
     const { market, marketsList } = this.state;
+    if (this.state.loading) {
+      return (
+        <div className="chart-spinner">
+          {' '}
+          <FadingCircle size={40} color="gray" />
+        </div>
+      );
+    }
     return (
       <Select
         className="market-select"
