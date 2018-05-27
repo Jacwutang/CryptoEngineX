@@ -1,6 +1,7 @@
 import React from 'react';
 
-import ChartType from './ChartType';
+// import ChartWithUpdatingData from './ChartWrapper';
+import CandleStickChartForContinuousIntraDay from './CandleStickChartForContinuousIntraDay';
 import { getData, getNewData } from './utils';
 
 import { TypeChooser } from 'react-stockcharts/lib/helper';
@@ -57,7 +58,12 @@ class Chart extends React.Component {
       );
     }
 
-    return <ChartType type="hybrid" data={this.state.data} />;
+    return (
+      <CandleStickChartForContinuousIntraDay
+        type="hybrid"
+        data={this.state.data}
+      />
+    );
   }
 }
 

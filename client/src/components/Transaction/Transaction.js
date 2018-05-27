@@ -33,7 +33,7 @@ class Transaction extends Component {
           });
         }
       });
-    }, 5000);
+    }, 2500);
   }
 
   componentWillUnmount() {
@@ -58,7 +58,7 @@ class Transaction extends Component {
                 item.classList.add(`trade-active-${trade.side}`);
                 setInterval(() => {
                   item.classList.remove(`trade-active-${trade.side}`);
-                }, 2500);
+                }, 5000);
               }
             }
             return (
