@@ -13,12 +13,21 @@
 
 
 
-#### Prototype 1![demonstration](http://g.recordit.co/H6GyyqS4pY.gif)
+####  
+    Prototype 1
+![demonstration](http://g.recordit.co/H6GyyqS4pY.gif)
 
 
 
 
-#### Prototype 2![demonstration](http://g.recordit.co/tSYUM18nM8.gif)
+#### 
+
+    Prototype 2
+   ![demonstration](http://g.recordit.co/tSYUM18nM8.gif)
 
 
-
+### Upcoming Features (Stay Tuned)
+1) Personalized watchlists. 
+2) Up-to-date news about CryptoCurrency in the global market.
+3) Chat Rooms. Discuss amongst friends.
+4) Link Exchange funds. Deposit. Buy. Sell. Trade.
