@@ -28,6 +28,6 @@
 
 ### Upcoming Features (Stay Tuned)
 1) Personalized watchlists. 
-2) Up-to-date news about CryptoCurrency in the global market.
-3) Chat Rooms. Discuss amongst friends.
-4) Link Exchange funds. Deposit. Buy. Sell. Trade.
+2) Up-to-date news about cryptos in the global market.
+3) Chat Rooms. Discuss amongst friends or enemies(?)
+4) Link Exchange funds.
