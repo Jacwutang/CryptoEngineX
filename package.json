@@ -26,6 +26,7 @@
     "concurrently": "^3.5.1",
     "express": "^4.16.3",
     "express-promise-router": "^3.0.2",
+    "knex": "^0.14.6",
     "mongoose": "^5.0.18",
     "pg": "^7.4.3",
     "pg-promise": "^8.4.4"
