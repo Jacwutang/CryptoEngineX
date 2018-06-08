@@ -10,10 +10,10 @@ const users = require("./routes/users");
 const bodyParser = require("body-parser");
 
 //Database setup to mlab
-const mongoose = require("mongoose");
-mongoose.Promise = global.Promise;
-const keys = require("./config/keys");
-mongoose.connect(keys.mongoURI);
+// const mongoose = require("mongoose");
+// mongoose.Promise = global.Promise;
+// const keys = require("./config/keys");
+// mongoose.connect(keys.mongoURI);
 
 // Wrap Express app
 app.use(bodyParser.json());

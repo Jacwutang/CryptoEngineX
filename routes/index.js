@@ -1,7 +1,9 @@
-const router = require('express').Router();
+const router = require("express-promise-router").Router();
+
+const db = require("../db");
 
 // GET home page
-router.get('/', (req,res) => {
+router.get("/", (req, res) => {
   res.send("Home");
 });
 
