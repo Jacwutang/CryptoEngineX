@@ -2,26 +2,25 @@
 const express = require("express");
 const app = express();
 
+const config = require("./config");
+
 // Load in Routes
-const index = require("./routes/index");
-const users = require("./routes/users");
+const APIHandler = require("./api");
+
+// Database setup connect to PostgreSQL
+
+const pg = require("pg");
+const knex = require("knex")(config.knex);
 
 //Middlewares/ Utils/ Helpers
 const bodyParser = require("body-parser");
+const path = require("path");
 
-//Database setup to mlab
-// const mongoose = require("mongoose");
-// mongoose.Promise = global.Promise;
-// const keys = require("./config/keys");
-// mongoose.connect(keys.mongoURI);
-
-// Wrap Express app
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-//prepend the string
-app.use("/", index);
-app.use("/users", users);
+//api routes
+app.use("/api", APIHandler);
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, "client/build")));
