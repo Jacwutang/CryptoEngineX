@@ -15,7 +15,7 @@
 
 ####  
     Prototype 1
-![demonstration](http://g.recordit.co/H6GyyqS4pY.gif)
+
 
 
 
