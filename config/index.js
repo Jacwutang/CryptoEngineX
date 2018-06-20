@@ -1,5 +1,5 @@
-const knex = require("./knex");
-const keys = require("./keys");
+const knex = require("./knexfile.js");
+const keys = require("./keys.js");
 
 module.exports = {
   keys,

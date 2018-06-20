@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const sessionsController = require("./sessionsController");
+const sessionsController = require("./sessionsController.js");
 
 router.post("/", sessionsController.create_session);
 

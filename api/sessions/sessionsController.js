@@ -1,4 +1,4 @@
-//load in some middleware here
+const pg = require("../../config/knexfile");
 
 exports.create_session = (req, res) => {
   //create session

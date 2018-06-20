@@ -8,9 +8,10 @@ const config = require("./config");
 const APIHandler = require("./api");
 
 // Database setup connect to PostgreSQL
+// const pg = require("pg");
 
-const pg = require("pg");
-const knex = require("knex")(config.knex);
+//init knex with options
+require("knex")(config.knex);
 
 //Middlewares/ Utils/ Helpers
 const bodyParser = require("body-parser");
