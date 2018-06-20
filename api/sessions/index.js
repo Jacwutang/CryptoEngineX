@@ -3,8 +3,8 @@ const router = express.Router();
 
 const sessionsController = require("./sessionsController");
 
-router.post("/new", sessionsController.create_session);
+router.post("/", sessionsController.create_session);
 
-router.delete("/destroy", sessionsController.destroy_session);
+router.delete("/", sessionsController.destroy_session);
 
 module.exports = router;
